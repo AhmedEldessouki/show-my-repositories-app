@@ -6,24 +6,40 @@ export default class Home extends Component {
   constructor() {
     super()
     this.state = {
-      repos: []
+      repos: [],
+      myRepos: []
     }
   }
 
   componentDidMount() {
-    axios.get(`https://api.github.com/users/ahmedeldessouki`)
-      .then(res => {
-        console.log('Data', res)
+    axios.get(`https://api.github.com/users/ahmedeldessouki/repos`).then((res) => {
+      console.log(res.data);
+      this.setState({
+        repos: res.data
+      }, function () {
+        console.log(this.state);
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+    }).catch((err) => {
+      console.log(err);
+    });
   }
+
   render() {
     return (
-      <div>
-        {this.state.repos}
-      </div>
+      <div className="pageContainer">
+        <ul className="reposContainer">
+          {
+            this.state.repos.map((item, i) => (
+              <div key={i}>
+                <a href={item.html_url}>
+                  <li>{item.name}</li>
+                </a>
+              </div>
+            ))
+
+          }
+        </ul>
+      </div >
     )
   }
 }
