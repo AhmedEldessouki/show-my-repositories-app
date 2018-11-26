@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
 import Home from './components/home/Home';
+
 class App extends Component {
-  render() {
-    return (
-      <div>
+	render() {
+		return (
+			<div>
         <Home />
       </div>
-    );
-  }
+		);
+	}
 }
 
 export default App;
