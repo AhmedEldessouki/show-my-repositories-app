@@ -27,18 +27,23 @@ export default class Home extends Component {
   render() {
     return (
       <div className="pageContainer">
-        <ul className="reposContainer">
-          {
-            this.state.repos.map((item, i) => (
-              <div key={i}>
-                <a href={item.html_url}>
-                  <li>{item.name}</li>
-                </a>
-              </div>
-            ))
+        <header>
+          <h1>My Repos</h1>
+        </header>
+        <body>
+          <ul className="reposContainer">
+            {
+              this.state.repos.map((item, i) => (
+                <div key={i} className="itemsContainer">
+                  <a href={item.html_url}>
+                    <li>{item.name}</li>
+                  </a>
+                </div>
+              ))
 
-          }
-        </ul>
+            }
+          </ul>
+        </body>
       </div >
     )
   }
