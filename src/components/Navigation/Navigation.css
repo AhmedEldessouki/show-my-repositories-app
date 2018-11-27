@@ -1,0 +1,23 @@
+.Navigation {
+  color: rgba(255, 250, 250, 0.5);
+  height: 100%;
+  
+  
+}
+
+.Navigation a:hover{
+  background-color: #282c34;
+  color: whitesmoke;
+  opacity: 0.5;
+}
+
+.Navigation .selected {
+  background-color: #282c34;
+  color: white;
+}
+
+.Navigation ul{
+  padding: 0;
+  margin: 0;
+  background-color: grey;
+}
