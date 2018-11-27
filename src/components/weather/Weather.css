@@ -1,0 +1,9 @@
+h1{
+  color: black;
+}
+.display-conditions{
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  align-items: center;
+}
