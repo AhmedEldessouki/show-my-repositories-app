@@ -20,13 +20,8 @@ class Weather extends Component {
     this.fetchData = this.fetchData.bind(this);
   }
 
-  componentDidUpdate() {
-    // this.fetchData(this.props)
-  }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.coords !== this.props.coords) {
-      console.log('coords : ', this.props.coords)
       this.setState({
         lat: nextProps.coords.latitude,
         lon: nextProps.coords.longitude,
@@ -37,13 +32,8 @@ class Weather extends Component {
   }
 
   fetchData(lat, lon) {
-
     axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&APPID=ca39c68815edbaae5b601563aa4bc6c7`)
       .then((res) => {
-        console.log('response weather data: ', res);
-        // this.setState({
-        //   weatherData: res.data,
-        // })
         this.setState({
           weatherData: res.data,
           temperature: res.data.list[0].main.temp,
