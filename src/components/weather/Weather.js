@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import './Weather.css'
-import axios from 'axios'
-import { geolocated } from 'react-geolocated';
+import React, { Component } from "react"
+import "./Weather.css"
+import axios from "axios"
+import { geolocated } from "react-geolocated";
 
 class Weather extends Component {
   constructor() {
@@ -74,13 +74,13 @@ class Weather extends Component {
           </div>
         }
       </div>
-    )
-  }
+		)
+	}
 }
 
 export default geolocated({
-  positionOptions: {
-    enableHighAccuracy: true,
-  },
-  userDecisionTimeout: 5000,
+	positionOptions: {
+		enableHighAccuracy: true,
+	},
+	userDecisionTimeout: 5000,
 })(Weather);
