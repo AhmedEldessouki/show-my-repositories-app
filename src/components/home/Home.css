@@ -2,6 +2,23 @@ header {
 	font-size: 30px;
 }
 
+header form {
+	width: 300px;
+	margin: 25px
+}
+
+.username-fetcher {
+	display: flex;
+	flex-direction: column;
+	width: 300px;
+	height: 150px;
+}
+
+.username-fetcher input {
+	margin-top: 10px;
+	height: 24px;
+}
+
 h1 {
 	text-align: center;
 }
@@ -11,7 +28,7 @@ h1 {
 	padding: 20px;
 }
 
-.left-container {
+.img-container {
 	display: -webkit-box;
 	display: flex;
 	justify-content: center;
@@ -30,10 +47,10 @@ img {
 	margin: 20px;
 }
 
-.right-container {
+.details-container {
 	display: grid;
 	padding: 20px;
-	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-template-columns: repeat( auto-fit, minmax(250px, 1fr));
 	grid-auto-rows: 100px;
 	grid-gap: 20px;
 	justify-content: center;
@@ -41,15 +58,15 @@ img {
 	color: whitesmoke;
 }
 
-.right-container a {
+.details-container a {
 	color: whitesmoke;
 }
 
-.right-container a:hover {
+.details-container a:hover {
 	background-color: green;
 }
 
-.right-container li {
+.details-container li {
 	background-color: darkslategray;
 	display: flex;
 	align-items: center;
@@ -99,4 +116,20 @@ a {
 	height: 100%;
 	align-items: center;
 	justify-content: center;
+}
+
+@media all and (max-width: 320px) {
+	header{
+		margin-top: 0;
+	}
+	.username-fetcher{
+		text-align: center;
+		width: 275px;
+	}
+	header form {
+		margin: 0;
+	}
+	input{
+		text-align: center;
+	}
 }
