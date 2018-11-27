@@ -7,42 +7,17 @@ class Weather extends Component {
   constructor() {
     super();
     this.state = {
+      lon: '',
+      lat: '',
+      weatherData: undefined,
       temperature: undefined,
       city: undefined,
       country: undefined,
       humidity: undefined,
       description: undefined,
-      error: undefined
+      isLoading: true
     }
     this.fetchData = this.fetchData.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  async fetchData(a) {
-
-    const result = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${a.coords.latitude}&lon=${a.coords.longitude}&APPID=ca39c68815edbaae5b601563aa4bc6c7`)
-      .then((res) => {
-        console.log('response weather data: ', res);
-        // this.setState({
-        //   weatherData: res.data,
-        //   isLoading: false,
-        // })
-        this.setState({
-          temperature: res.data.list[0].main.temp,
-          city: res.data.city.name,
-          country: res.data.city.country,
-          humidity: res.data.list[0].main.humidity,
-          windSpeed: res.data.list[0].wind.speed,
-          error: ""
-        })
-      })
-      // Catch any errors we hit and update the app
-      .catch((error => this.setState({ error, isLoading: false })));
-    console.log('result: ', result)
-    return await result;
-
-
   }
 
   componentDidUpdate() {
@@ -50,43 +25,54 @@ class Weather extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.coords !== null) {
+    if (nextProps.coords !== this.props.coords) {
       console.log('coords : ', this.props.coords)
-      this.fetchData(nextProps)
+      this.setState({
+        lat: nextProps.coords.latitude,
+        lon: nextProps.coords.longitude,
+      }, function () {
+        this.fetchData(this.state.lat, this.state.lon)
+      })
     }
   }
-  handleChange(e) {
-    this.setState({ 
-      city: e.target.city, 
-      country: e.target.country, 
-    })
+
+  fetchData(lat, lon) {
+
+    axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&APPID=ca39c68815edbaae5b601563aa4bc6c7`)
+      .then((res) => {
+        console.log('response weather data: ', res);
+        // this.setState({
+        //   weatherData: res.data,
+        // })
+        this.setState({
+          weatherData: res.data,
+          temperature: res.data.list[0].main.temp,
+          city: res.data.city.name,
+          country: res.data.city.country,
+          humidity: res.data.list[0].main.humidity,
+          windSpeed: res.data.list[0].wind.speed,
+          isLoading: false,
+        })
+      })
+      .catch((error) => this.setState({ error, isLoading: false }));
   }
 
-  handleSubmit(e) {
-    alert('A name was submitted: ' + this.state.value);
-    e.preventDefault();
-  }
 
-  // displayWeatherData() {
-  //   setTimeout(() => {
-  //     <p>{this.state.weatherData.city.name}</p>
-  //   }, 5000);
-  // }
   render() {
     console.log('in the render:', this.state.weatherData)
+    const { city, country, windSpeed, temperature, humidity, weatherData } = this.state
+    const kelvinToCelsius = require('kelvin-to-celsius');
     return (
       <div>
-        <h1>You Country {this.state.city}, {this.state.country}</h1>
-        <form onSubmit={e => this.handleSubmit(e)} >
-          <label className="username-fetcher">
-            Weahter Situatuin:
-						<input type="text" value={this.state.city} name="city" placeholder="Enter Your city" />
-						<input type="text" value={this.state.country} name="city" placeholder="Enter Your city" />
-						<input type="text" value={this.state.temperature} name="city" placeholder="Enter Your city" />
-            <input type="text" value={this.state.humidity} name="country" placeholder="Enter Your country" />
-            <input type="text" value={this.state.windSpeed} name="country" placeholder="Enter Your country" />
-          </label>
-        </form>
+        {this.state.isLoading ? <p>loading data</p> :
+          <div className="display-conditions">
+            <p>Location : {city}, {country}</p>
+            <p>Temperature: {kelvinToCelsius(temperature)} C</p>
+            <p>Weather Condition: <em>{weatherData.list[0].weather[0].description}</em></p>
+            <p>Humidity: {humidity}</p>
+            <p>Wind Speed: {windSpeed}</p>
+          </div>
+        }
       </div>
     )
   }
