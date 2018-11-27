@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import "./Home.css";
 import axios from "axios";
 
-export default class Home extends Component {
-	constructor(props) {
-		super(props);
+
+class Home extends Component {
+	constructor() {
+		super();
+
 		this.state = {
 			repos: [],
 			profile: '',
@@ -111,3 +113,5 @@ export default class Home extends Component {
 		)
 	}
 }
+
+export default Home;
