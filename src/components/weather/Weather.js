@@ -7,9 +7,16 @@ class Weather extends Component {
   constructor() {
     super();
     this.state = {
-      weatherData: ''
+      temperature: undefined,
+      city: undefined,
+      country: undefined,
+      humidity: undefined,
+      description: undefined,
+      error: undefined
     }
-    this.fetchData = this.fetchData.bind(this)
+    this.fetchData = this.fetchData.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   async fetchData(a) {
@@ -17,13 +24,21 @@ class Weather extends Component {
     const result = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${a.coords.latitude}&lon=${a.coords.longitude}&APPID=ca39c68815edbaae5b601563aa4bc6c7`)
       .then((res) => {
         console.log('response weather data: ', res);
+        // this.setState({
+        //   weatherData: res.data,
+        //   isLoading: false,
+        // })
         this.setState({
-          weatherData: res.data,
-          isLoading: false,
+          temperature: res.data.list[0].main.temp,
+          city: res.data.city.name,
+          country: res.data.city.country,
+          humidity: res.data.list[0].main.humidity,
+          windSpeed: res.data.list[0].wind.speed,
+          error: ""
         })
       })
       // Catch any errors we hit and update the app
-      .catch(error => this.setState({ error, isLoading: false }));
+      .catch((error => this.setState({ error, isLoading: false })));
     console.log('result: ', result)
     return await result;
 
@@ -40,17 +55,38 @@ class Weather extends Component {
       this.fetchData(nextProps)
     }
   }
-  displayWeatherData() {
-    setTimeout(() => {
-      <p>{this.state.weatherData.city.name}</p>
-    }, 5000);
+  handleChange(e) {
+    this.setState({ 
+      city: e.target.city, 
+      country: e.target.country, 
+    })
   }
+
+  handleSubmit(e) {
+    alert('A name was submitted: ' + this.state.value);
+    e.preventDefault();
+  }
+
+  // displayWeatherData() {
+  //   setTimeout(() => {
+  //     <p>{this.state.weatherData.city.name}</p>
+  //   }, 5000);
+  // }
   render() {
     console.log('in the render:', this.state.weatherData)
     return (
       <div>
-        {this.displayWeatherData.bind(this)}
-        {/* <h1>{weatherData.city.name}</h1> */}
+        <h1>You Country {this.state.city}, {this.state.country}</h1>
+        <form onSubmit={e => this.handleSubmit(e)} >
+          <label className="username-fetcher">
+            Weahter Situatuin:
+						<input type="text" value={this.state.city} name="city" placeholder="Enter Your city" />
+						<input type="text" value={this.state.country} name="city" placeholder="Enter Your city" />
+						<input type="text" value={this.state.temperature} name="city" placeholder="Enter Your city" />
+            <input type="text" value={this.state.humidity} name="country" placeholder="Enter Your country" />
+            <input type="text" value={this.state.windSpeed} name="country" placeholder="Enter Your country" />
+          </label>
+        </form>
       </div>
     )
   }
