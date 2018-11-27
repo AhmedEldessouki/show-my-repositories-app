@@ -7,36 +7,50 @@ class Weather extends Component {
   constructor() {
     super();
     this.state = {
-      lat: null,
-      lon: null
+      weatherData: ''
     }
+    this.fetchData = this.fetchData.bind(this)
   }
-  
-  componentDidMount() {
-    console.log(this.props)
+
+  async fetchData(a) {
+
+    const result = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${a.coords.latitude}&lon=${a.coords.longitude}&APPID=ca39c68815edbaae5b601563aa4bc6c7`)
+      .then((res) => {
+        console.log('response weather data: ', res);
+        this.setState({
+          weatherData: res.data,
+          isLoading: false,
+        })
+      })
+      // Catch any errors we hit and update the app
+      .catch(error => this.setState({ error, isLoading: false }));
+    console.log('result: ', result)
+    return await result;
+
 
   }
+
   componentDidUpdate() {
+    // this.fetchData(this.props)
+  }
+
+  componentWillReceiveProps(nextProps) {
     if (this.props.coords !== null) {
-
       console.log('coords : ', this.props.coords)
-
-      axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${this.state.latitude}&lon=${this.state.longitude}&APPID=1a79373e32ce9808d51c9e9a961ab8a0`)
-        .then((res) => {
-          console.log('response weather data: ', res);
-          this.setState({
-            weath: res.data.list
-          })
-        }).catch((err) => {
-          console.log(err);//todo we don't show the user the error in console. we remove this in the future
-        });
-
+      this.fetchData(nextProps)
     }
+  }
+  displayWeatherData() {
+    setTimeout(() => {
+      <p>{this.state.weatherData.city.name}</p>
+    }, 5000);
   }
   render() {
+    console.log('in the render:', this.state.weatherData)
     return (
       <div>
-
+        {this.displayWeatherData.bind(this)}
+        {/* <h1>{weatherData.city.name}</h1> */}
       </div>
     )
   }
@@ -46,5 +60,5 @@ export default geolocated({
   positionOptions: {
     enableHighAccuracy: true,
   },
-  userDecisionTimeout: 7.2e+6,
+  userDecisionTimeout: 5000,
 })(Weather);
