@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import "./Home.css";
 import axios from "axios";
 
+
 class Home extends Component {
 	constructor() {
 		super();
+
 		this.state = {
 			repos: [],
 			profile: '',
