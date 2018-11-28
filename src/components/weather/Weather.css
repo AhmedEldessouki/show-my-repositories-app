@@ -12,7 +12,9 @@
 h1 {
   color: black;
 }
-
+form{
+  align-items: center;
+}
 .display-conditions {
   background-color: whitesmoke;
   opacity: .8;
@@ -29,12 +31,6 @@ h1 {
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
-}
-
-@media all and (max-width: 320px) {
-  .display-conditions {
-    padding: 5px;
-  }
 }
 
 .display-conditions-item {
@@ -65,4 +61,10 @@ h1 {
   grid-column: 1/-1;
   width: 50px;
   border-color: transparent;
+}
+
+@media all and (max-width: 320px) {
+  .display-conditions {
+    padding: 5px;
+  }
 }

@@ -1,10 +1,10 @@
-header {
-	font-size: 30px;
+.Home {
+	background-color: #282c34;
+	padding-top: 20px;
 }
 
-header form {
-	width: 300px;
-	margin: 25px
+header {
+	font-size: 30px;
 }
 
 .username-fetcher {
@@ -21,11 +21,6 @@ header form {
 
 h1 {
 	text-align: center;
-}
-
-.Home {
-	background-color: #282c34;
-	padding: 20px;
 }
 
 .img-container {
@@ -120,20 +115,32 @@ a {
 	justify-content: center;
 }
 
-@media all  and (min-width: 320px) and (max-width: 750px) {
-	header{
+@media all and (min-width: 320px) and (max-width: 750px) {
+	header {
 		margin-top: 0;
 	}
-	.username-fetcher{
+	.form-container {
+		display: grid;
+		grid-template-columns: 1fr 2fr 1fr;
+		/* width: 300px; */
+		margin: 25px;
+	}
+	.username-fetcher {
 		flex: 0 1 100%;
+		grid-column: 2;
 		text-align: center;
-		justify-items: center;
-		align-content: center;
 	}
 	header form {
 		margin: 0;
 	}
-	input{
+	input {
 		text-align: center;
+	}
+}
+
+@media all and (min-width: 320px) and (max-width: 375px) {
+	.username-fetcher {
+		width: 250px;
+		grid-column: 1;
 	}
 }
