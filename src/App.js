@@ -16,7 +16,6 @@ class App extends Component {
         <Navigation />
         <Switch>
           <Route exact path='/' component={Home} />
-          {/* both /roster and /roster/:number begin with /roster */}
           <Route path='/weather' component={Weather} />
           <Route path="/404" component={NotFound} />
           <Redirect from="*" to="/404" />
