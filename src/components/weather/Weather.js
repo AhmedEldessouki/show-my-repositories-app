@@ -34,7 +34,8 @@ class Weather extends Component {
       .then((res) => {
         this.setState({
           weatherData: res.data,
-          weatherDataCondition: res.data.list.filter((value, index, self) => { return self.indexOf(value) % 8 === 0; })
+          weatherDataCondition: res.data.list.filter((value, index, self) => { return self.indexOf(value) % 8 === 0; }),
+          isLoading: false
         });
       })
       .catch((error) => this.setState({ error, isLoading: false }));
@@ -43,7 +44,7 @@ class Weather extends Component {
     const { weatherData, weatherDataCondition } = this.state;
     return (
       <div className="Weather">
-        {!this.state.isLoading ? <p>loading data</p> :
+        {this.state.isLoading ? <p>loading data</p> :
           weatherDataCondition.map(function (weatherDataCondition, index) {
             return (
               <div className="display-conditions" key={index}>
