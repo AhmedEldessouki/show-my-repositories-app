@@ -35,8 +35,8 @@ class Weather extends Component {
       .then((res) => {
         this.setState({
           weatherData: res.data,
-          city: res.data.city.name,// todo not ver important to do like that because you can simple use the "weatherData" ONLY!
-          country: res.data.city.country,// todo not ver important to do like that because you can simple use the "weatherData" ONLY!
+          city: res.data.city.name,// todo not very important to do like that because you can simple use the "weatherData" ONLY!
+          country: res.data.city.country,// todo not very important to do like that because you can simple use the "weatherData" ONLY!
           isLoading: false,
         },function () {
           console.log(this.state.weatherData);//todo please remove this shit after you test. i added it to see the data
