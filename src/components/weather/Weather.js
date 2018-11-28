@@ -10,11 +10,8 @@ class Weather extends Component {
       lon: '',
       lat: '',
       weatherData: undefined,
-      temperature: undefined,
       city: undefined,
       country: undefined,
-      humidity: undefined,
-      description: undefined,
       isLoading: true
     }
     this.fetchData = this.fetchData.bind(this);
@@ -36,41 +33,48 @@ class Weather extends Component {
       .then((res) => {
         this.setState({
           weatherData: res.data,
-          temperature: res.data.list[0].main.temp,
           city: res.data.city.name,
           country: res.data.city.country,
-          humidity: res.data.list[0].main.humidity,
-          windSpeed: res.data.list[0].wind.speed,
           isLoading: false,
         })
       })
       .catch((error) => this.setState({ error, isLoading: false }));
   }
 
-
-  render() {
-    console.log('in the render:', this.state.weatherData)
-    const { city, country, windSpeed, temperature, humidity, weatherData } = this.state
+  createArr = () => {
+    const { city, country, weatherData } = this.state
     const kelvinToCelsius = require('kelvin-to-celsius');
+    let arrTemp = []
+    for (let i = 0; i < weatherData.list.length; i += 8) {
+      arrTemp.push(
+        <div className="display-conditions">
+          <p className="display-conditions-item">Location : {city}, {country}</p>
+          <p className="display-conditions-item">Temperature: {kelvinToCelsius(weatherData.list[i].main.temp)} C</p>
+          <p className="weather-condition-container display-conditions-item">
+            <img className="img-fluid" alt="icon" src={`http://openweathermap.org/img/w/${weatherData.list[i].weather[0].icon}.png`} />
+            Weather Condition: <em>{weatherData.list[i].weather[0].description}</em>
+          </p>
+          <p className="display-conditions-item">Humidity: {weatherData.list[i].main.humidity}</p>
+          <p className="display-conditions-item">Wind Speed: {weatherData.list[i].wind.speed}</p>
+        </div>
+      )
+    }
+    return arrTemp
+  }
+  render() {
     return (
-      <div>
+      <div className="Weather">
         {this.state.isLoading ? <p>loading data</p> :
-          <div className="display-conditions">
-            <p>Location : {city}, {country}</p>
-            <p>Temperature: {kelvinToCelsius(temperature)} C</p>
-            <p>Weather Condition: <em>{weatherData.list[0].weather[0].description}</em></p>
-            <p>Humidity: {humidity}</p>
-            <p>Wind Speed: {windSpeed}</p>
-          </div>
+          this.createArr()
         }
       </div>
-		)
-	}
+    )
+  }
 }
 
 export default geolocated({
-	positionOptions: {
-		enableHighAccuracy: true,
-	},
-	userDecisionTimeout: 5000,
+  positionOptions: {
+    enableHighAccuracy: true,
+  },
+  userDecisionTimeout: 5000,
 })(Weather);
