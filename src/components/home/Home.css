@@ -1,10 +1,10 @@
-.Home {
-	background-color: #282c34;
-	padding-top: 20px;
-}
-
 header {
 	font-size: 30px;
+}
+
+header form {
+	width: 300px;
+	margin: 25px
 }
 
 .username-fetcher {
@@ -21,6 +21,11 @@ header {
 
 h1 {
 	text-align: center;
+}
+
+.Home {
+	background-color: #282c34;
+	padding: 20px;
 }
 
 .img-container {
@@ -86,7 +91,7 @@ h1 {
 .repos-container {
 	display: grid;
 	padding: 20px;
-	grid-template-columns: repeat( auto-fit, minmax(150px, 1fr));
+	grid-template-columns: 1fr 1fr 1fr 1fr;
 	grid-auto-rows: 100px;
 	grid-gap: 20px;
 	justify-content: center;
@@ -106,8 +111,6 @@ ul {
 a {
 	display: flex;
 	color: black;
-	flex-wrap: wrap;
-	text-align: center;
 	text-decoration: none;
 	flex: 1;
 	height: 100%;
@@ -115,32 +118,18 @@ a {
 	justify-content: center;
 }
 
-@media all and (min-width: 320px) and (max-width: 750px) {
-	header {
+@media all and (max-width: 320px) {
+	header{
 		margin-top: 0;
 	}
-	.form-container {
-		display: grid;
-		grid-template-columns: 1fr 2fr 1fr;
-		/* width: 300px; */
-		margin: 25px;
-	}
-	.username-fetcher {
-		flex: 0 1 100%;
-		grid-column: 2;
+	.username-fetcher{
 		text-align: center;
+		width: 275px;
 	}
 	header form {
 		margin: 0;
 	}
-	input {
+	input{
 		text-align: center;
-	}
-}
-
-@media all and (min-width: 320px) and (max-width: 375px) {
-	.username-fetcher {
-		width: 250px;
-		grid-column: 1;
 	}
 }
