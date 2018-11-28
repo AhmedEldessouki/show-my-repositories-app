@@ -68,11 +68,13 @@ class Home extends Component {
 					<h1>Welcome {profile.name}</h1>
 					{/* <form onSubmit={e => this.handleSubmit(e)} > */}
 					<form className="form-container">
-						<label className="username-fetcher">
-							Please Enter A Github Username:
+						<div className="username-fetcher">
+							<label className="username-fetcher">
+								Please Enter A Github Username:
 						<input type="text" onChange={this.handleChange} value={value} name="name" placeholder="Enter Your Username on Github" />
-						</label>
-						<input type="submit" onSubmit={this.handleSubmit} />
+							</label>
+							<input type="submit" onSubmit={this.handleSubmit} className="submit-button" />
+						</div>
 					</form>
 				</header>
 				<main>
