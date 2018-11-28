@@ -91,7 +91,7 @@ h1 {
 .repos-container {
 	display: grid;
 	padding: 20px;
-	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-template-columns: repeat( auto-fit, minmax(150px, 1fr));
 	grid-auto-rows: 100px;
 	grid-gap: 20px;
 	justify-content: center;
@@ -111,6 +111,8 @@ ul {
 a {
 	display: flex;
 	color: black;
+	flex-wrap: wrap;
+	text-align: center;
 	text-decoration: none;
 	flex: 1;
 	height: 100%;
@@ -118,13 +120,15 @@ a {
 	justify-content: center;
 }
 
-@media all and (max-width: 320px) {
+@media all  and (min-width: 320px) and (max-width: 750px) {
 	header{
 		margin-top: 0;
 	}
 	.username-fetcher{
+		flex: 0 1 100%;
 		text-align: center;
-		width: 275px;
+		justify-items: center;
+		align-content: center;
 	}
 	header form {
 		margin: 0;
