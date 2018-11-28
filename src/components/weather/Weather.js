@@ -11,8 +11,6 @@ class Weather extends Component {
       lon: null,
       lat: null,
       weatherData: null,
-      city: null,
-      country: null,
       isLoading: true
     };
     this.fetchData = this.fetchData.bind(this);
@@ -24,8 +22,8 @@ class Weather extends Component {
         lat: nextProps.coords.latitude,
         lon: nextProps.coords.longitude,
       }, function () {
-				let self = this; // save object reference
-				self.fetchData(this.state.lat, this.state.lon)
+        let self = this; // save object reference
+        self.fetchData(this.state.lat, this.state.lon)
       })
     }
   }
@@ -35,23 +33,19 @@ class Weather extends Component {
       .then((res) => {
         this.setState({
           weatherData: res.data,
-          city: res.data.city.name,// todo not very important to do like that because you can simple use the "weatherData" ONLY!
-          country: res.data.city.country,// todo not very important to do like that because you can simple use the "weatherData" ONLY!
-          isLoading: false,
-        },function () {
-          console.log(this.state.weatherData);//todo please remove this shit after you test. i added it to see the data
-				})
+          isLoading: false
+        })
       })
       .catch((error) => this.setState({ error, isLoading: false }));//todo please handle errors correctly
   }
 
   // weatherData = () => {
-  //   const { city, country, weatherData } = this.state;
+  //   const weatherData = this.state;
   //   // let arrTemp = [];
   //   // for (let i = 0; i < weatherData.list.length; i += 8) {
   //   //   arrTemp.push(
   //   //     <div className="display-conditions">
-  //   //       <p className="display-conditions-item">Location : {city}, {country}</p>
+  //   //       <p className="display-conditions-item">Location : {weatherData.city.name}, {weatherData.city.country}</p>
   //   //       <p className="display-conditions-item">Temperature: {kelvinToCelsius(weatherData.list[i].main.temp)} C</p>
   //   //       <p className="weather-condition-container display-conditions-item">
   //   //         <img className="img-fluid" alt="icon" src={`http://openweathermap.org/img/w/${weatherData.list[i].weather[0].icon}.png`} />
@@ -65,16 +59,16 @@ class Weather extends Component {
   //   return weatherData
   // }; //todo please remove this shit and make it how it shown below
   render() {
-		const { city, country, weatherData } = this.state;
+    const {weatherData} = this.state;
     return (
       <div className="Weather">
         {this.state.isLoading ? <p>loading data</p> :
           <div className="display-conditions">
-            <p className="display-conditions-item">Location : {city}, {country}</p>
-             <ul>
-                {weatherData.list.map(function(list, index){
-									return <li className="display-conditions-item" key={ index }>Temperature: {kelvinToCelsius(list.main.temp)} C</li>;
-								})}
+            <p className="display-conditions-item">Location : {weatherData.city.name}, {weatherData.city.country}</p>
+            <ul>
+              {weatherData.list.map(function (list, index) {
+                return <li className="display-conditions-item" key={index}>Temperature: {kelvinToCelsius(list.main.temp)} C</li>;
+              })}
             </ul>
           </div>
         }
